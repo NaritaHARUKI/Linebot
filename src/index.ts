@@ -54,7 +54,7 @@ const sendReplyMessage = async (replyToken:string, messageText:string,userId:str
 }
 
 const writeLog = (logMessage: string) => {
-  const logFilePath = '/ore-no.log'
+   const logFilePath = `${__dirname}/ore-no.log`
   const timestamp = new Date().toISOString()
   const logEntry = `[${timestamp}] ${logMessage}\n`
   
