@@ -55,12 +55,15 @@ const sendReplyMessage = async (replyToken:string, messageText:string,userId:str
   }
 }
 
-const writeLog = (logMessage: string) => {
-   const logFilePath = `${__dirname}/ore-no.log`
+const writeLog = async (logMessage: string) => {
+  const logFilePath = `${__dirname}/ore-no.log`
   const timestamp = new Date().toISOString()
   const logEntry = `[${timestamp}] ${logMessage}\n`
   
-  fs.appendFile(logFilePath, logEntry, (err) => {
-    if (err) console.error('Error writing log:', err)
-  })
+  try {
+    await fs.promises.appendFile(logFilePath, logEntry)
+    console.log('Log written successfully')
+  } catch (err) {
+    console.error('Error writing log:', err)
+  }
 }
