@@ -22,6 +22,7 @@ app.post('/webhook', async (req, res) => {
   const replyToken = event.replyToken
 
   await sendReplyMessage(replyToken, `${message.text}だと？黙れ！`, event.source.userId)
+  console.log(`req ${event.source.userId} ${message.text}だと？黙れ！`)
   res.status(200).send()
 })
 
