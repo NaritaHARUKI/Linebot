@@ -22,7 +22,6 @@ app.post('/webhook', async (req, res) => {
   const replyToken = event.replyToken
 
   await sendReplyMessage(replyToken, `${message.text}だと？黙れ！`, event.source.userId)
-  console.log(`req ${event.source.userId} ${message.text}だと？黙れ！`)
   res.status(200).send()
 })
 
@@ -42,13 +41,12 @@ const sendReplyMessage = async (replyToken:string, messageText:string,userId:str
   };
 
   try {
-    const response = await axios.post('https://api.line.me/v2/bot/message/reply', replyMessage, {
+    await axios.post('https://api.line.me/v2/bot/message/reply', replyMessage, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.CHANNEL_ACCESS_TOKEN}`,
       },
     })
-    console.log('Reply sent successfully:', response.data)
     writeLog(`res ${userId} ${messageText}だと？黙れ！`)
   } catch (error) {
     writeLog(`res ${userId} Error sending reply message: ${error}`)
@@ -62,8 +60,7 @@ const writeLog = async (logMessage: string) => {
   
   try {
     await fs.promises.appendFile(logFilePath, logEntry)
-    console.log('Log written successfully')
   } catch (err) {
-    console.error('Error writing log:', err)
+    // console.error(`Error writing log${err}`)
   }
 }
