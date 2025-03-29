@@ -42,12 +42,13 @@ const sendReplyMessage = async (replyToken:string, messageText:string,userId:str
   };
 
   try {
-    await axios.post('https://api.line.me/v2/bot/message/reply', replyMessage, {
+    const response = await axios.post('https://api.line.me/v2/bot/message/reply', replyMessage, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': process.env.CHANNEL_ACCESS_TOKEN,
+        'Authorization': `Bearer ${process.env.CHANNEL_ACCESS_TOKEN}`,
       },
     })
+    console.log('Reply sent successfully:', response.data)
     writeLog(`res ${userId} ${messageText}だと？黙れ！`)
   } catch (error) {
     writeLog(`res ${userId} Error sending reply message: ${error}`)
