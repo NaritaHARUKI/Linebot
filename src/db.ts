@@ -47,9 +47,6 @@ export const DBORM = {
   Shop: {
     findOne: async (userId: string) => {
       const shop = await DB.getRepository(Shop).findOne({ where: { userId } })
-      if (!shop) {
-        throw new Error('Shop not found')
-      }
       return shop
     },
     save: async (shop: any) => {
