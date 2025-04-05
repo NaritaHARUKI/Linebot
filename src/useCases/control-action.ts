@@ -20,8 +20,7 @@ const controlAction = async ({ type, status, message, userId }: ControlAction) =
     switch (type) {
         case 'shop':
             console.log('shop')
-            res = await shopAction(status, message, userId)
-            return res
+            return await shopAction(status, message, userId)
         default:
             console.log('default')
             res = 'ニコニコ☺️'
