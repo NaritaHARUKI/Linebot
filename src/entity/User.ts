@@ -8,6 +8,9 @@ export class User {
   @Column()
   name!: string
 
+  @Column()
+  type!: string
+
   @Column({ unique: true })
   lineId!: string
 
