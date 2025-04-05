@@ -1,4 +1,5 @@
 import { DB } from "../db"
+import SHOP_STATUS from "../type/shop-status";
 
 type UserStatus = {
     type: 'shop' | 'customer' | '';
@@ -9,7 +10,12 @@ const checkUserStatus = async (lineId: string, isFirstShop?: boolean): Promise<U
     const user = await DB.getRepository('User').findOne({ where: { lineId } })
     // 初めての人
     if (!user) {
-        DB.getRepository('User').save({ lineId, type: 'customer', status: 'first' })
+        DB.getRepository('User').save({
+            name: '',
+            lineId,
+            type: '',
+            status: '',
+        })
         return {'type': '' , 'status': '' }
     }
 

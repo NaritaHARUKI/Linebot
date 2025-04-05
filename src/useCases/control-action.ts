@@ -15,6 +15,7 @@ const controlAction = async ({ type, status, message, userId }: ControlAction) =
 
     let res = ''
     res = await command(status, message, userId)
+    if (res !== '') return res
 
     switch (type) {
         case 'shop':
