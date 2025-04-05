@@ -1,9 +1,11 @@
 import { DBORM } from "../../db"
+import SHOP_STATUS from "../../type/shop-status"
 
 const showShopInfo = async (userId: string) => {
     const shop = await DBORM.Shop.findOne(userId)
     if (!shop) {
-        throw new Error('Shop not found')
+        DBORM.User.updateStatus(userId, SHOP_STATUS.complte.no)
+        return 'お店が登録されていません。'
     }
 
     const messageText = `
