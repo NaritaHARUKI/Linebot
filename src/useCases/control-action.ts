@@ -17,8 +17,10 @@ const controlAction = ({ type, status, message, userId }: ControlAction) => {
 
     switch (type) {
         case 'shop':
+            console.log('shop')
             return shopAction(status, message, userId)
         default:
+            console.log('default')
             return 'ニコニコ☺️'
     }
 }
@@ -28,8 +30,10 @@ export default controlAction
 const command = (status: string, message: string, userId: string) => {
     switch (message) {
         case 'お店を登録する':
+            console.log('お店を登録する')
             return wannaInsertShopName(userId)
         case 'お店の情報を確認する':
+            console.log('お店の情報を確認する')
             return wannaInsertShopName(userId)
     }
 }
