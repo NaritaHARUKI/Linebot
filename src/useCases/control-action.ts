@@ -21,6 +21,7 @@ const controlAction = async ({ type, status, message, userId }: ControlAction) =
         case 'shop':
             console.log('shop')
             res = await shopAction(status, message, userId)
+            return
         default:
             console.log('default')
             res = 'ニコニコ☺️'
