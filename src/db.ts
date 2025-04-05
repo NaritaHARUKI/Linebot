@@ -28,6 +28,7 @@ export const DBORM = {
           status: SHOP_STATUS.first.insertShopName,
           type: type,
         })
+        return
       }
       const user = new User()
       user.name = ''
