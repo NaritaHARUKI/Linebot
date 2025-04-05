@@ -15,7 +15,7 @@ export const DB = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [User,Shop],
 })
 
 export const DBORM = {
