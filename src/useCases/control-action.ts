@@ -34,7 +34,7 @@ const command =  (status: string, message: string, userId: string) => {
     switch (message) {
         case 'お店を登録する':
             return wannaInsertShopName(userId)
-        case 'お店の名前を登録する':
+        case 'お店を削除する':
             return deleteShop(userId)
         case 'お店の情報を確認する':
             return showShopInfo(userId)
