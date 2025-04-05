@@ -63,10 +63,7 @@ export const DBORM = {
     update: async (userId: string, data: {
       [key : string]: string
     }) => {
-      const shop = await DB.getRepository(Shop).findOne({ where: { userId } })
-      if (shop) {
-        await DB.getRepository(Shop).save(data)
-      }
+      await DB.getRepository(Shop).update({ userId }, data)
     }
   }
 }
