@@ -5,17 +5,17 @@ export class Shop {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({ unique: true })
-  userId!: string | null
+  @Column({ unique: true, nullable: true })
+  userId!: string
 
-  @Column()
-  name!: string | null
+  @Column({ nullable: true })
+  name!: string
 
-  @Column()
-  locate!: string | null
+  @Column({ nullable: true })
+  locate!: string
 
-  @Column()
-  url!: string | null
+  @Column({ nullable: true })
+  url!: string
 
   @Column({ default: false })
   complete!: boolean
