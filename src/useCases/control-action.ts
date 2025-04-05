@@ -1,4 +1,5 @@
 import SHOP_STATUS from "../type/shop-status"
+import deleteShop from "./shopAction/delete-shop"
 import insertShopName from "./shopAction/insert-shop-name"
 import insertShopUrl from "./shopAction/insert-shop-url"
 import insertShopLocate from "./shopAction/inset-shop-locate"
@@ -33,6 +34,8 @@ const command =  (status: string, message: string, userId: string) => {
     switch (message) {
         case 'お店を登録する':
             return wannaInsertShopName(userId)
+        case 'お店の名前を登録する':
+            return deleteShop(userId)
         case 'お店の情報を確認する':
             return showShopInfo(userId)
     }
@@ -50,7 +53,7 @@ const shopAction = (status: string, message: string, userId: string) => {
         case SHOP_STATUS.third.insertShopURL:
             return insertShopUrl(message, userId)
         case SHOP_STATUS.complte.yes:
-            return `お店の情報はすでに登録されています。お店の情報は、「お店の情報を確認する」で確認できます。`
+            return `お店の情報はすでに登録されてるよ。お店の情報は、「お店の情報を確認する」で確認できるでーー。ニコニコ☺️`
         default:
             return 'ニコニコ☺️'
     }

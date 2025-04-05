@@ -1,5 +1,4 @@
-import { DB, DBORM } from "../../db"
-import SHOP_STATUS from "../../type/shop-status"
+import { DBORM } from "../../db"
 
 const wannaInsertShopName = async (userId : string) => {
     const shop = await DBORM.Shop.findOne(userId)

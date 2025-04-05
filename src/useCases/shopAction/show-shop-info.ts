@@ -9,9 +9,9 @@ const showShopInfo = async (userId: string) => {
     }
 
     const messageText = `
-        名前:${shop.name}
-        場所:${shop.locate}
-        URL:${shop.url}
+名前:${shop.name}
+場所:${shop.locate}
+URL:${shop.url}
     `
     return messageText
 }

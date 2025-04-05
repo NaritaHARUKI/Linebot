@@ -38,11 +38,7 @@ export const DBORM = {
       await DB.getRepository(User).save(user)
     },
     updateStatus : async (lineId: string, status: string) => {
-      const user = await DB.getRepository(User).findOne({ where: { lineId } })
-      if (user) {
-        user.status = status
-        await DB.getRepository(User).save(user)
-      }
+      await DB.getRepository(User).update({ lineId }, { status })
     },
     insertType: async (lineId: string, type: string) => {
       const user = await DB.getRepository(User).findOne({ where: { lineId } })
@@ -64,6 +60,9 @@ export const DBORM = {
       [key : string]: string
     }) => {
       await DB.getRepository(Shop).update({ userId }, data)
+    },
+    delete: async (userId: string) => {
+      await DB.getRepository(Shop).delete({ userId })
     }
   }
 }
