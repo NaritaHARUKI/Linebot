@@ -11,23 +11,25 @@ interface ControlAction {
     userId: string
 }
 
-const controlAction = ({ type, status, message, userId }: ControlAction) => {
+const controlAction = async ({ type, status, message, userId }: ControlAction) => {
 
-    command(status, message, userId)
+    let res = ''
+    res = await command(status, message, userId)
 
     switch (type) {
         case 'shop':
             console.log('shop')
-            return shopAction(status, message, userId)
+            res = await shopAction(status, message, userId)
         default:
             console.log('default')
-            return 'ニコニコ☺️'
+            res = 'ニコニコ☺️'
     }
+    return res
 }
 
 export default controlAction
 
-const command = (status: string, message: string, userId: string) => {
+const command =  (status: string, message: string, userId: string) => {
     switch (message) {
         case 'お店を登録する':
             console.log('お店を登録する')
@@ -36,6 +38,7 @@ const command = (status: string, message: string, userId: string) => {
             console.log('お店の情報を確認する')
             return wannaInsertShopName(userId)
     }
+    return ''
 }
 
 const shopAction = (status: string, message: string, userId: string) => {
