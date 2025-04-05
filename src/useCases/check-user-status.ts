@@ -19,8 +19,8 @@ const checkUserStatus = async (lineId: string): Promise<UserStatus> => {
     }
 
     return {
-        'type': user.type,
-        'status': user.status
+        'type': user.type || '',
+        'status': user.status  || ''
     }
  }
 

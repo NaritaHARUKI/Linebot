@@ -22,6 +22,11 @@ export const DB = new DataSource({
 export const DBORM = {
   User: {
     initialInsert: async (lineId: string, type: string) => {
+      const isExsits = await DB.getRepository(User).findOne({ where: { lineId } })
+      if (isExsits) {
+        await DB.getRepository(User).save({ status: SHOP_STATUS.first.insertShopName })
+        return
+      }
       const user = new User()
       user.name = ''
       user.lineId = lineId
