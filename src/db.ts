@@ -24,7 +24,7 @@ export const DBORM = {
     initialInsert: async (lineId: string, type: string) => {
       const isExsits = await DB.getRepository(User).findOne({ where: { lineId } })
       if (isExsits) {
-        await DB.getRepository(User).save({ status: SHOP_STATUS.first.insertShopName })
+        await DB.getRepository(User).save({ status: SHOP_STATUS.first.insertShopName, name: '' })
         return
       }
       const user = new User()
