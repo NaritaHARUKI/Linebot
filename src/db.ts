@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm'
 import { User } from './entity/User'
 import dotenv from 'dotenv'
 import { Shop } from './entity/Shop'
+import SHOP_STATUS from './type/shop-status'
 
 dotenv.config()
 
@@ -20,6 +21,14 @@ export const DB = new DataSource({
 
 export const DBORM = {
   User: {
+    initialInsert: async (lineId: string, type: string) => {
+      const user = new User()
+      user.name = ''
+      user.lineId = lineId
+      user.type = type
+      user.status = SHOP_STATUS.first.insertShopName
+      await DB.getRepository(User).save(user)
+    },
     updateStatus : async (lineId: string, status: string) => {
       const user = await DB.getRepository(User).findOne({ where: { lineId } })
       if (user) {
