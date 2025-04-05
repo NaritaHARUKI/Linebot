@@ -22,8 +22,6 @@ export const DB = new DataSource({
 export const DBORM = {
   User: {
     initialInsert: async (lineId: string, type: string) => {
-      const isExist = await DB.getRepository(User).findOne({ where: { lineId } })
-      if (isExist) return
       const user = new User()
       user.name = ''
       user.lineId = lineId
