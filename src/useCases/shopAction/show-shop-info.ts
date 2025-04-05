@@ -13,3 +13,5 @@ const showShopInfo = async (userId: string) => {
     `
     return messageText
 }
+
+export default showShopInfo
