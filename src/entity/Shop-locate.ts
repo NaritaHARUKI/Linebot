@@ -14,5 +14,5 @@ export class ShopLocate {
 
   // relation
   @ManyToOne(() => Shop, (shop) => shop.shopLocates)
-  shop: Shop | undefined
+  shop!: Shop
 }

@@ -19,7 +19,6 @@ export class Shop {
   complete!: boolean
 
   // relation
-  @OneToMany(() => ShopLocate, (locate) => locate.shopId)
-  shopLocates: ShopLocate[] | undefined
+  @OneToMany(() => ShopLocate, (locate) => locate.shop)
+  shopLocates!: ShopLocate[]
 }
-
