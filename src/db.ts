@@ -4,6 +4,7 @@ import { User } from './entity/User'
 import dotenv from 'dotenv'
 import { Shop } from './entity/Shop'
 import SHOP_STATUS from './type/shop-status'
+import { ShopLocate } from './entity/Shop-locate'
 
 dotenv.config()
 
@@ -50,7 +51,10 @@ export const DBORM = {
   },
   Shop: {
     findOne: async (userId: string) => {
-      const shop = await DB.getRepository(Shop).findOne({ where: { userId } })
+      const shop = await DB.getRepository(Shop).findOne({
+        where: { userId },
+        relations: ['shopLocates'],
+      })
       return shop
     },
     save: async (shop: any) => {
@@ -63,6 +67,21 @@ export const DBORM = {
     },
     delete: async (userId: string) => {
       await DB.getRepository(Shop).delete({ userId })
+    }
+  },
+  ShopLocate: {
+    insertLocate: async (userId: string, stationIds: number[]) => {
+      const shop = await DB.getRepository(Shop).findOne({ where: { userId } })
+      if (!shop) return
+
+      const locates = stationIds.map(stationId => {
+        const locate = new ShopLocate()
+        locate.shopId = shop.id
+        locate.stationId = stationId
+        return locate
+      })
+
+      await DB.getRepository(ShopLocate).save(locates)
     }
   }
 }

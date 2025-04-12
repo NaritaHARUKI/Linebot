@@ -1,12 +1,57 @@
 import { DBORM } from "../../db"
+import STATION_DATA from "../../station-data"
 import SHOP_STATUS from "../../type/shop-status"
 
 const insertShopLocate = async (message: string, userId: string) => {
-    DBORM.Shop.update(userId, { locate: message })
-    DBORM.User.updateStatus(userId, SHOP_STATUS.third.insertShopURL)
+    const _validate = (message: string) => {
+        let errs: string[] = []
+        let ok: number[] = []
+        const submittedStations = message.split('\n').map(s => s.trim()).filter(s => s !== '')
+        const uniqueStations = [...new Set(submittedStations)]
+        STATION_DATA.map((station) => {
+            return uniqueStations.some((uniqueStation: string) => {
+                const stationName = station.station_name === uniqueStation 
+                stationName ? ok.push(station.id) : errs.push(uniqueStation)
+            })
+        })
 
-    const messageText = `お店の場所を「${message}」で登録しました。
-最後に、お店のURLを登録します。あなたのお店のURLを教えてください。`
+        if(errs.length > 0) {
+            return { ok: false, data: errs }
+        }
+        return { ok: true, data: ok }
+    }
+
+    if(_validate(message).ok === false) {
+        const messageText = `
+        以下の駅名は登録できませんでした。
+        もう一度入力してください。
+        -----------------------
+        ${_validate(message).data.map((station) => {
+            return `
+            駅名：${station}
+            `
+        }).join('\n')}
+        -----------------------
+        `
+        return messageText
+    }
+
+    DBORM.ShopLocate.insertLocate(userId, _validate(message).data as number[])
+    DBORM.User.updateStatus(userId, SHOP_STATUS.third.insertShopURL)
+    const messageText = `
+    お店の最寄駅を以下で登録しました。
+    -----------------------
+    ${_validate(message).data.map((station) => {
+        return `
+        駅名：${station}
+        `
+    }
+    ).join('\n')}
+    -----------------------
+    お店のURLを登録します。
+    登録したいURLを入力してください。
+    例）https://hikakin.com
+    `
     return messageText
 }
 

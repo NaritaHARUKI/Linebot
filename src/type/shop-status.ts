@@ -6,6 +6,7 @@ const SHOP_STATUS = {
     second: {
         wannaInsertShoplocate: 'wanna-insert-shoplocate',
         insertShoplocate: 'insert-shoplocate',
+        confirmShoplocate: 'confirm-shoplocate',
     },
     third: {
         wannaInsertShopURL: 'wanna-insert-shop-url',

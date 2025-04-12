@@ -3,11 +3,13 @@ import SHOP_STATUS from "../../type/shop-status"
 
 const insertShopName = async (message: string, userId: string) => {
     await DBORM.Shop.save({ name: message, userId })
-    await DBORM.User.updateStatus(userId, SHOP_STATUS.second.insertShoplocate)
+    await DBORM.User.updateStatus(userId, SHOP_STATUS.second.confirmShoplocate)
 
     const messageText = `お店の名前を「${message}」で登録しました。
-次に、お店の名前を場所を登録します。あなたのお店の場所を〇〇[都道府県]〇〇[市群]〇〇[区町村]の形式で教えてください。
-例）愛知県名古屋市中川区`
+次に、お店の最寄駅を登録します。登録したい最寄駅を入力してください。複数選択したい場合は改行して送信して下さい。
+例）
+名古屋駅
+栄駅`
     return messageText
 }
 

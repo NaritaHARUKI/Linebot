@@ -1,4 +1,5 @@
 import { DBORM } from "../../db"
+import STATION_DATA from "../../station-data"
 import SHOP_STATUS from "../../type/shop-status"
 
 const showShopInfo = async (userId: string) => {
@@ -8,11 +9,18 @@ const showShopInfo = async (userId: string) => {
         return 'お店が登録されていません。'
     }
 
+    const getStationName = (stationId: number) => 
+        STATION_DATA.find(station => station.id === stationId)?.station_name 
+   
     const messageText = `
-名前:${shop.name}
-場所:${shop.locate}
-URL:${shop.url}
-    `
+    名前:${shop.name}
+    場所:${shop.shopLocates.map((locate) => {
+            return `
+            駅名：${getStationName(locate.stationId)}
+            `
+        }
+        ).join(',')}
+    URL:${shop.url}`
     return messageText
 }
 
