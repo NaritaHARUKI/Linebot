@@ -1,4 +1,5 @@
 import SHOP_STATUS from "../type/shop-status"
+import confirmShopLocate from "./shopAction/confirm-shop-locate"
 import deleteShop from "./shopAction/delete-shop"
 import insertShopName from "./shopAction/insert-shop-name"
 import insertShopUrl from "./shopAction/insert-shop-url"
@@ -46,6 +47,9 @@ const shopAction = (status: string, message: string, userId: string) => {
     switch (status) {
         case SHOP_STATUS.first.insertShopName:
             return insertShopName(message, userId)
+
+        case SHOP_STATUS.second.confirmShoplocate:
+            return confirmShopLocate(message, userId)
 
         case SHOP_STATUS.second.insertShoplocate:
             return insertShopLocate(message, userId)

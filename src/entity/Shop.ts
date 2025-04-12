@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { ShopLocate } from './Shop-locate'
 
 @Entity()
 export class Shop {
@@ -12,11 +13,13 @@ export class Shop {
   name!: string
 
   @Column({ nullable: true })
-  locate!: string
-
-  @Column({ nullable: true })
   url!: string
 
   @Column({ default: false })
   complete!: boolean
+
+  // relation
+  @OneToMany(() => ShopLocate, (locate) => locate.shopId)
+  shopLocates: ShopLocate[] = []
 }
+
