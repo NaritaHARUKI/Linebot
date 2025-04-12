@@ -36,8 +36,6 @@ app.post('/webhook', async (req, res) => {
   // check user status
   const status = await checkUserStatus(userId)
 
-  console.log('status', status, 'message', message, 'userId', userId)
-
   // actions
   const replyMessage = await controlAction({ ...status, message, userId })
 
