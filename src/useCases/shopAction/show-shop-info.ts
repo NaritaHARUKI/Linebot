@@ -14,7 +14,7 @@ const showShopInfo = async (userId: string) => {
    
     const messageText = `
     名前:${shop.name}
-    場所:${shop.shopLocates.map((locate) => {
+    場所:${Array.isArray(shop.shopLocates) && shop.shopLocates.map((locate) => {
             return `
             駅名：${getStationName(locate.stationId)}
             `
