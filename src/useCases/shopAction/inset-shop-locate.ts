@@ -53,12 +53,9 @@ const insertShopLocate = async (message: string, userId: string) => {
     const messageText = `
     お店の最寄駅を以下で登録しました。
     -----------------------
-    ${_validate(message).data.map((station) => {
-        return `
-        駅名：${_getStationName(station as number)}
-        `
-    }
-    ).join('\n')}
+    駅名：${_validate(message).data.map((station) => {
+        return _getStationName(station as number)
+    }).join(',')}
     -----------------------
     お店のURLを登録します。
     登録したいURLを入力してください。
