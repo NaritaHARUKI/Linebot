@@ -20,6 +20,6 @@ export class Shop {
 
   // relation
   @OneToMany(() => ShopLocate, (locate) => locate.shopId)
-  shopLocates: ShopLocate[] = []
+  shopLocates: ShopLocate[] | undefined
 }
 
