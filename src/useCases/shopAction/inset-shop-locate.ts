@@ -10,7 +10,7 @@ const insertShopLocate = async (message: string, userId: string) => {
         const uniqueStations = [...new Set(submittedStations)]
         STATION_DATA.map((station) => {
             return uniqueStations.some((uniqueStation: string) => {
-                const stationName = station.station_name === uniqueStation 
+                const stationName = station.station_name === uniqueStation || station.id === Number(uniqueStation)
                 stationName ? ok.push(station.id) : errs.push(uniqueStation)
             })
         })
@@ -21,6 +21,8 @@ const insertShopLocate = async (message: string, userId: string) => {
         return { ok: true, data: ok }
     }
 
+    console.log(_validate(message))
+
     if(_validate(message).ok === false) {
         const messageText = `
         以下の駅名は登録できませんでした。
@@ -28,7 +30,7 @@ const insertShopLocate = async (message: string, userId: string) => {
         -----------------------
         ${_validate(message).data.map((station) => {
             return `
-            駅名：${station}
+            駅名またはid：${station}
             `
         }).join('\n')}
         -----------------------

@@ -16,20 +16,25 @@ const confirmShopLocate = async (message: string, userId: string) => {
 
     await DBORM.User.updateStatus(userId, SHOP_STATUS.second.insertShoplocate)
     const messageText = `
-    ${findStation.length}件の最寄駅が見つかりました。
+    ${findStation.length}件の駅が見つかりました。
     -----------------------
     ${findStation.map((station) => {
         return `
+        id：${station.id}
         駅名：${station.station_name}
         路線名：${station.line_name}
         都道府県名：${station.prefecture}
         `
     }).join('\n')}
     -----------------------
-    上記の中から、登録したい最寄駅の駅名を送信してください。複数選択したい場合は改行して送信して下さい。
+    上記の中から、登録したい最寄駅の駅名、またはidを送信してください。複数選択したい場合は改行して送信して下さい。
     例）
-    名古屋駅
-    栄駅
+    名古屋
+    栄
+
+    または
+    1
+    2
     `
     return messageText
 }
