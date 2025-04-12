@@ -8,11 +8,18 @@ const insertShopLocate = async (message: string, userId: string) => {
         let ok: number[] = []
         const submittedStations = message.split('\n').map(s => s.trim()).filter(s => s !== '')
         const uniqueStations = [...new Set(submittedStations)]
-        STATION_DATA.map((station) => {
-            return uniqueStations.some((uniqueStation: string) => {
+        uniqueStations.forEach((uniqueStation) => {
+            const found = STATION_DATA.some((station) => {
                 const stationName = station.station_name === uniqueStation || station.id === Number(uniqueStation)
-                stationName ? ok.push(station.id) : errs.push(uniqueStation)
+                return stationName
             })
+    
+            if (found) {
+                const stationId = STATION_DATA.find(station => station.station_name === uniqueStation || station.id === Number(uniqueStation))?.id
+                if (stationId) ok.push(stationId)
+            } else {
+                errs.push(uniqueStation)
+            }
         })
 
         if(errs.length > 0) {
