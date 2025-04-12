@@ -1,5 +1,5 @@
 import { DBORM } from "../../db"
-import STATION_DATA from "../../station_data"
+import STATION_DATA from "../../station-data"
 import SHOP_STATUS from "../../type/shop-status"
 
 const confirmShopLocate = async (message: string, userId: string) => {
