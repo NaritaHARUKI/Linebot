@@ -28,7 +28,10 @@ const insertShopLocate = async (message: string, userId: string) => {
         return { ok: true, data: ok }
     }
 
-    console.log(_validate(message))
+    const _getStationName = (stationId: number) => {
+        const station = STATION_DATA.find(station => station.id === stationId)
+        return station?.station_name
+    }
 
     if(_validate(message).ok === false) {
         const messageText = `
@@ -52,7 +55,7 @@ const insertShopLocate = async (message: string, userId: string) => {
     -----------------------
     ${_validate(message).data.map((station) => {
         return `
-        駅名：${station}
+        駅名：${_getStationName(station as number)}
         `
     }
     ).join('\n')}
