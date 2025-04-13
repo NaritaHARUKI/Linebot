@@ -30,19 +30,24 @@ jobs:
           pnpm run build
           echo "Build completed"
 
-     - name: Backup and deploy to honda_tusaba
+      - name: Backup and deploy to honda_tusaba
         id: backup_deploy_honda_tusaba
         run: |
           echo "Backing up and deploying to server 1..."
-          # サーバー1でバックアップを作成
-          ssh -i ~/.ssh/github-actions user@192.168.0.32 "cd LineBot && cp -r . backup/LineBot_backup_$(date +%Y%m%d%H%M%S)"
+          ssh -i ~/.ssh/github-actions user@192.168.0.32 "
+          cd LineBot && \
+          mkdir -p backup & \
+          cp -r . backup/LineBot_backup_$(date +%Y%m%d%H%M%S)
+          "
           echo "Backup created on server 1"
-          
-          # ビルドしてdist/index.jsを作成
-          ssh -i ~/.ssh/github-actions user@192.168.0.32 "cd LineBot && pnpm install && pnpm run build"
-          
-          # LineBotプロセスを再起動
-          ssh -i ~/.ssh/github-actions user@192.168.0.32 "cd LineBot && git pull && pm2 restart LineBot"
+          ssh -i ~/.ssh/github-actions user@192.168.0.32 "
+          cd LineBot && \
+          pnpm install && \
+          pnpm run build"
+          ssh -i ~/.ssh/github-actions user@192.168.0.32 "
+          cd LineBot && \
+          git pull && \
+          pm2 restart LineBot"
           echo "Deployed and restarted on server 1"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -52,25 +57,31 @@ jobs:
         id: backup_deploy_honda_tusaba_2
         run: |
           echo "Backing up and deploying to server 2..."
-          # サーバー2でバックアップを作成
-          ssh -i ~/.ssh/github-actions user@192.168.0.33 "cd LineBot && cp -r . backup/LineBot_backup_$(date +%Y%m%d%H%M%S)"
+          ssh -i ~/.ssh/github-actions user@192.168.0.33 "
+          cd LineBot && \
+          mkdir -p backup && \
+          cp -r . backup/LineBot_backup_$(date +%Y%m%d%H%M%S)"
           echo "Backup created on server 2"
-          
-          # ビルドしてdist/index.jsを作成
-          ssh -i ~/.ssh/github-actions user@192.168.0.33 "cd LineBot && pnpm install && pnpm run build"
-          
-          # LineBotプロセスを再起動
-          ssh -i ~/.ssh/github-actions user@192.168.0.33 "cd LineBot && git pull && pm2 restart LineBot"
+          ssh -i ~/.ssh/github-actions user@192.168.0.33 "
+          cd LineBot && \
+          pnpm install && \
+          pnpm run build"
+          ssh -i ~/.ssh/github-actions user@192.168.0.33 "
+          cd LineBot && \
+          git pull && \
+          pm2 restart LineBot"
           echo "Deployed and restarted on server 2"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
 
       - name: Rollback if deploy fails (server 1)
         if: steps.backup_deploy_honda_tusaba.outcome != 'success'
         run: |
           echo "Deploy failed on server 1. Rolling back..."
-          ssh -i ~/.ssh/github-actions user@192.168.0.32 "cd LineBot && cp -r backup/LineBot_backup_latest/* . && pm2 restart LineBot"
+          ssh -i ~/.ssh/github-actions user@192.168.0.32 "
+          cd LineBot && \
+          cp -r backup/LineBot_backup_latest/* . && \
+          pm2 restart LineBot"
           echo "Rollback completed on server 1"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -79,7 +90,9 @@ jobs:
         if: steps.backup_deploy_honda_tusaba_2.outcome != 'success'
         run: |
           echo "Deploy failed on server 2. Rolling back..."
-          ssh -i ~/.ssh/github-actions user@192.168.0.33 "cd LineBot && cp -r backup/LineBot_backup_latest/* . && pm2 restart LineBot"
+          ssh -i ~/.ssh/github-actions user@192.168.0.33 "cd LineBot && \
+          cp -r backup/LineBot_backup_latest/* . && \
+          pm2 restart LineBot"
           echo "Rollback completed on server 2"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
