@@ -13,6 +13,9 @@ export class Shop {
   name!: string
 
   @Column({ nullable: true })
+  adress!: string
+
+  @Column({ nullable: true })
   url!: string
 
   @Column({ default: false })

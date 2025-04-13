@@ -12,6 +12,9 @@ const SHOP_STATUS = {
         wannaInsertShopURL: 'wanna-insert-shop-url',
         insertShopURL: 'insert-shop-url',
     },
+    fourth: {
+        insertShopAdress: 'insert-shop-adress',
+    },
     complte: {
         no: 'no',
         yes: 'yes',
