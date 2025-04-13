@@ -1,6 +1,7 @@
 import SHOP_STATUS from "../type/shop-status"
 import confirmShopLocate from "./shopAction/confirm-shop-locate"
 import deleteShop from "./shopAction/delete-shop"
+import insertShopAdress from "./shopAction/insert-shop-adress"
 import insertShopName from "./shopAction/insert-shop-name"
 import insertShopUrl from "./shopAction/insert-shop-url"
 import insertShopLocate from "./shopAction/inset-shop-locate"
@@ -56,6 +57,10 @@ const shopAction = (status: string, message: string, userId: string) => {
 
         case SHOP_STATUS.third.insertShopURL:
             return insertShopUrl(message, userId)
+
+        case SHOP_STATUS.fourth.insertShopAdress:
+            return insertShopAdress(message, userId)
+
         case SHOP_STATUS.complte.yes:
             return `お店の情報はすでに登録されてるよ。お店の情報は、「お店の情報を確認する」で確認できるでーー。ニコニコ☺️`
         default:
