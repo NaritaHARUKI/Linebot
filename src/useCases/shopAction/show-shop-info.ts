@@ -14,10 +14,11 @@ const showShopInfo = async (userId: string) => {
    
     const messageText = `
     名前:${shop.name}
-    場所:${Array.isArray(shop.shopLocates) && shop.shopLocates.map((locate) => {
+    最寄駅:${Array.isArray(shop.shopLocates) && shop.shopLocates.map((locate) => {
             return getStationName(locate.stationId)
         }).join(',')}
-    URL:${shop.url}`
+    URL:${shop.url}
+    住所：${shop.adress}`
     return messageText
 }
 
